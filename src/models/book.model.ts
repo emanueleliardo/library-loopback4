@@ -1,12 +1,12 @@
-import {Entity, model, property} from '@loopback/repository';
+import { Entity, model, property } from '@loopback/repository';
 
 @model()
 export class Book extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
   })
-  id?: number;
+  _id?: string;
 
   @property({
     type: 'string',

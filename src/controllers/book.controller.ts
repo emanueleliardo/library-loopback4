@@ -15,20 +15,20 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {Book} from '../models';
-import {BookRepository} from '../repositories';
+import { Book } from '../models';
+import { BookRepository } from '../repositories';
 
 export class BookController {
   constructor(
     @repository(BookRepository)
-    public bookRepository : BookRepository,
-  ) {}
+    public bookRepository: BookRepository,
+  ) { }
 
   @post('/books', {
     responses: {
       '200': {
         description: 'Book model instance',
-        content: {'application/json': {schema: {'x-ts-type': Book}}},
+        content: { 'application/json': { schema: { 'x-ts-type': Book } } },
       },
     },
   })
@@ -40,7 +40,7 @@ export class BookController {
     responses: {
       '200': {
         description: 'Book model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
@@ -56,7 +56,7 @@ export class BookController {
         description: 'Array of Book model instances',
         content: {
           'application/json': {
-            schema: {type: 'array', items: {'x-ts-type': Book}},
+            schema: { type: 'array', items: { 'x-ts-type': Book } },
           },
         },
       },
@@ -72,7 +72,7 @@ export class BookController {
     responses: {
       '200': {
         description: 'Book PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
@@ -87,11 +87,11 @@ export class BookController {
     responses: {
       '200': {
         description: 'Book model instance',
-        content: {'application/json': {schema: {'x-ts-type': Book}}},
+        content: { 'application/json': { schema: { 'x-ts-type': Book } } },
       },
     },
   })
-  async findById(@param.path.number('id') id: number): Promise<Book> {
+  async findById(@param.path.string('id') id: string): Promise<Book> {
     return await this.bookRepository.findById(id);
   }
 
@@ -103,7 +103,7 @@ export class BookController {
     },
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() book: Book,
   ): Promise<void> {
     await this.bookRepository.updateById(id, book);
@@ -116,7 +116,7 @@ export class BookController {
       },
     },
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.bookRepository.deleteById(id);
   }
 }

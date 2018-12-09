@@ -1,14 +1,14 @@
-import {DefaultCrudRepository, juggler} from '@loopback/repository';
-import {Book} from '../models';
-import {DbDataSource} from '../datasources';
-import {inject} from '@loopback/core';
+import { DefaultCrudRepository, juggler } from '@loopback/repository';
+import { Book } from '../models';
+import { MongoDBDataSource } from '../datasources';
+import { inject } from '@loopback/core';
 
 export class BookRepository extends DefaultCrudRepository<
   Book,
-  typeof Book.prototype.id
-> {
+  typeof Book.prototype._id
+  > {
   constructor(
-    @inject('datasources.db') dataSource: DbDataSource,
+    @inject('datasources.mongoDB') dataSource: MongoDBDataSource,
   ) {
     super(Book, dataSource);
   }
