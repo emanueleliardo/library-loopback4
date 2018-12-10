@@ -15,6 +15,12 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
+import { inject } from '@loopback/context';
+import {
+  AuthenticationBindings,
+  UserProfile,
+  authenticate,
+} from '@loopback/authentication';
 import { Book } from '../models';
 import { BookRepository } from '../repositories';
 
@@ -22,6 +28,8 @@ export class BookController {
   constructor(
     @repository(BookRepository)
     public bookRepository: BookRepository,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    private user: UserProfile,
   ) { }
 
   @post('/books', {
@@ -50,6 +58,7 @@ export class BookController {
     return await this.bookRepository.count(where);
   }
 
+  @authenticate('BasicStrategy')
   @get('/books', {
     responses: {
       '200': {
